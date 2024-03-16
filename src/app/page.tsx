@@ -1,6 +1,6 @@
-import EffectPanel from "@/components/EffectPanel";
-import TriggerPanel from "@/components/TriggerPanel";
-import OutputPanel from "@/components/OutputPanel";
+import EffectPanel from "@/components/ui/EffectPanel";
+import TriggerPanel from "@/components/ui/TriggerPanel";
+import OutputPanel from "@/components/ui/OutputPanel";
 import React from "react";
 type Props = {};
 
