@@ -2,6 +2,6 @@ import React from "react";
 type Props = {};
 
 const EffectPanel: React.FC<Props> = ({}) => {
-  return <div className="flex-1 h-full bg-gray-200"></div>;
+  return <div className="bg-gray-dark h-full flex-[2] rounded-lg"></div>;
 };
 export default EffectPanel;
