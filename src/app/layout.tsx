@@ -12,10 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClientWrapper>
-      <html lang="ja">
-        <body>{children}</body>
-      </html>
-    </ClientWrapper>
+    <html lang="ja">
+      <body>
+        <ClientWrapper>{children}</ClientWrapper>
+      </body>
+    </html>
   );
 }
