@@ -1,19 +1,44 @@
 "use client";
 import React from "react";
 import PanelAddMenu from "../PanelAddMenu/PanelAddMenu";
-import { Button } from "@chakra-ui/react";
+import { FaKeyboard as KeyboardIcon } from "react-icons/fa";
+import { LuTimer as TimerIcon } from "react-icons/lu";
+import { Icon } from "@chakra-ui/react";
 
 type Props = {};
 
 const TriggerPanel: React.FC<Props> = ({}) => {
   return (
-    <div className="bg-gray-dark flex h-full flex-1 flex-col rounded-lg">
+    <div className="bg-gray-dark relative flex h-full flex-1 flex-col rounded-lg">
       <PanelAddMenu
-        title="Add Trigger"
+        title="トリガーを追加"
         items={[
-          { label: "Button", icon: <Button>Add Button</Button> },
-          { label: "Menu", icon: <Button>Add Menu</Button> },
-          { label: "Link", icon: <Button>Add Link</Button> },
+          {
+            label: "キーボード入力",
+            icon: <Icon as={KeyboardIcon} />,
+            initialNode: {
+              panel: "Trigger",
+              label: "キーボード入力",
+              iconUrl: "/icons/keyboard.svg",
+              hasIn: false,
+              hasOut: true,
+              panelX: 0,
+              panelY: 0,
+            },
+          },
+          {
+            label: "一定秒数ごとに",
+            icon: <Icon as={TimerIcon} />,
+            initialNode: {
+              panel: "Trigger",
+              label: "一定秒数ごとに",
+              iconUrl: "/icons/keyboard.svg",
+              hasIn: false,
+              hasOut: true,
+              panelX: 0,
+              panelY: 0,
+            },
+          },
         ]}
       />
     </div>
