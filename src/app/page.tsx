@@ -1,8 +1,8 @@
-import EffectPanel from "@/components/ui/EffectPanel";
-import TriggerPanel from "@/components/ui/TriggerPanel";
-import OutputPanel from "@/components/ui/OutputPanel";
+import EffectPanel from "@/components/ui/EffectPanel/EffectPanel";
+import TriggerPanel from "@/components/ui/TriggerPanel/TriggerPanel";
+import OutputPanel from "@/components/ui/OutputPanel/OutputPanel";
 import React from "react";
-import Inspector from "@/components/ui/Inspector";
+import Inspector from "@/components/ui/Inspector/Inspector";
 type Props = {};
 
 const Home: React.FC<Props> = ({}) => {
