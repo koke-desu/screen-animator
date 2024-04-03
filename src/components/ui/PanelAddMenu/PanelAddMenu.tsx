@@ -9,13 +9,14 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import React from "react";
 
 type MenuItemType = {
   label: string;
-  icon: React.JSX.Element;
+  iconUrl: string;
   initialNode: Omit<NodeType, "id">;
 };
 
@@ -53,7 +54,7 @@ const PanelAddMenu: React.FC<Props> = ({ title, items }) => {
           return (
             <MenuItem
               key={index}
-              icon={item.icon}
+              icon={<Image src={item.iconUrl} boxSize="24px" alt="" />}
               onClick={() => {
                 addNode(item.initialNode);
               }}
