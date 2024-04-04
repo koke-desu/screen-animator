@@ -10,6 +10,7 @@ export type NodeArrowType = {
 };
 
 export const nodeArrowsAtom = atom<NodeArrowType[]>([]);
+export const nodeArrowPortalAtom = atom<SVGGElement | null>(null);
 
 export const addNodeArrowAtom = atom(
   null,

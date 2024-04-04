@@ -3,7 +3,7 @@ import TriggerPanel from "@/components/ui/TriggerPanel/TriggerPanel";
 import OutputPanel from "@/components/ui/OutputPanel/OutputPanel";
 import React from "react";
 import Inspector from "@/components/ui/Inspector/Inspector";
-import NodeArrow from "@/components/ui/NodeArrow/NodeArrow";
+import NodeArrowPortal from "@/components/ui/NodeArrow/NodeArrowPortal";
 type Props = {};
 
 const Home: React.FC<Props> = ({}) => {
@@ -16,7 +16,7 @@ const Home: React.FC<Props> = ({}) => {
       </div>
       <Inspector />
 
-      <NodeArrow start={{ x: 100, y: 100 }} end={{ x: 500, y: 200 }} />
+      <NodeArrowPortal />
     </div>
   );
 };

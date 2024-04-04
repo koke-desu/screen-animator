@@ -5,9 +5,10 @@ import {
 } from "@/globalState/nodes";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import ArrowAnimation from "./ArrowAnimation";
+import NodeArrow from "../NodeArrow/NodeArrow";
 
 type Props = { node: NodeType };
 
@@ -18,13 +19,15 @@ const PanelNode: React.FC<Props> = ({ node }) => {
     y: selectedNode?.panelY || 0,
   });
   const [, updateNode] = useAtom(updateNodeAtom);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [start, setStart] = useState<{ x: number; y: number } | null>(null);
+  const [end, setEnd] = useState<{ x: number; y: number } | null>(null);
 
   // node間の矢印をつなぐときに、Dragでの移動を無効化するため
   const [isDraggable, setIsDraggable] = useState(true);
   const onMouseDown = (event: React.MouseEvent) => {
     const target = event.target as Element;
     if (target.getAttribute("data-node-arrow-start") !== null) {
-      console.log("start!");
       setIsDraggable(false);
     }
   };
@@ -35,60 +38,86 @@ const PanelNode: React.FC<Props> = ({ node }) => {
   }, [node.id, position.x, position.y, updateNode]);
 
   return (
-    <motion.div
-      style={{
-        top: position.y,
-        left: position.x,
-      }}
-      drag={isDraggable}
-      dragMomentum={false}
-      onDragEnd={(event, info) => {
-        setPosition((prev) => ({
-          x: prev.x + info.offset.x,
-          y: prev.y + info.offset.y,
-        }));
-      }}
-      onMouseDown={onMouseDown}
-      onMouseUp={() => setIsDraggable(true)}
-      onMouseLeave={() => setIsDraggable(true)}
-    >
-      <Box
-        bg="gray.200"
-        w={48}
-        rounded={4}
-        textColor="gray.700"
-        fontWeight="bold"
-        position="absolute"
-        cursor="pointer"
-        onClick={() => {
-          setSelectedNode(node.id);
+    <>
+      <motion.div
+        style={{
+          top: position.y,
+          left: position.x,
         }}
-        userSelect="none"
+        drag={isDraggable}
+        dragMomentum={false}
+        onDragEnd={(event, info) => {
+          setPosition((prev) => ({
+            x: prev.x + info.offset.x,
+            y: prev.y + info.offset.y,
+          }));
+        }}
+        onMouseDown={onMouseDown}
+        onMouseMove={(event) => {
+          const rect = boxRef.current?.getBoundingClientRect();
+          if (isDraggable && rect) {
+            setStart({
+              x: rect.right,
+              y: rect.top + rect.height / 2,
+            });
+          }
+
+          if (!isDraggable) {
+            setEnd({
+              x: event.clientX,
+              y: event.clientY,
+            });
+          }
+        }}
+        onMouseUp={() => {
+          setIsDraggable(true);
+        }}
+        onMouseLeave={() => {
+          setIsDraggable(true);
+        }}
       >
-        <Flex
-          pl={3}
-          pr={4}
-          py={2}
-          justify="start"
-          alignItems="center"
-          position="relative"
-          gap={3}
+        <Box
+          bg="gray.200"
+          w={48}
+          rounded={4}
+          textColor="gray.700"
+          fontWeight="bold"
+          position="absolute"
+          cursor="pointer"
+          onClick={() => {
+            setSelectedNode(node.id);
+          }}
+          userSelect="none"
+          ref={boxRef}
         >
-          <Image src={node.iconUrl} boxSize="24px" alt="" draggable="false" />
-          <Text>{node.label}</Text>
-          <Box
-            bg="transparent"
-            position="absolute"
-            right={-1.5}
-            p={2}
-            data-node-arrow-start
-            draggable="false"
+          <Flex
+            pl={3}
+            pr={4}
+            py={2}
+            justify="start"
+            alignItems="center"
+            position="relative"
+            gap={3}
           >
-            <ArrowAnimation />
-          </Box>
-        </Flex>
-      </Box>
-    </motion.div>
+            <Image src={node.iconUrl} boxSize="24px" alt="" draggable="false" />
+            <Text>{node.label}</Text>
+            <Box
+              bg="transparent"
+              position="absolute"
+              right={-1.5}
+              p={2}
+              data-node-arrow-start
+              draggable="false"
+            >
+              <ArrowAnimation />
+            </Box>
+          </Flex>
+        </Box>
+      </motion.div>
+      {start !== null && end !== null && (
+        <NodeArrow start={start} end={{ x: 500, y: 500 }} />
+      )}
+    </>
   );
 };
 
