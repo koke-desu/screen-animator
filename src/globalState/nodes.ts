@@ -9,6 +9,9 @@ export type NodeType = {
   hasOut: boolean;
   panelX: number;
   panelY: number;
+  options: {
+    [key: string]: any;
+  };
 };
 
 export const nodesAtom = atom<NodeType[]>([]);
