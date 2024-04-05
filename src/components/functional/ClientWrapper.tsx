@@ -2,6 +2,7 @@
 
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import React from "react";
+import AddWindowEvent from "./AddWindowEvent";
 
 const theme = extendTheme({
   colors: {
@@ -24,6 +25,11 @@ type Props = {
 };
 
 const ClientWrapper: React.FC<Props> = ({ children }) => {
-  return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
+  return (
+    <ChakraProvider theme={theme}>
+      <AddWindowEvent />
+      {children}
+    </ChakraProvider>
+  );
 };
 export default ClientWrapper;

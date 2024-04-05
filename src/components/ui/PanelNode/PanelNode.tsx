@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import ArrowAnimation from "./ArrowAnimation";
 import NodeArrow from "../NodeArrow/NodeArrow";
+import { mouseAtom } from "@/globalState/mouse";
 
 type Props = { node: NodeType };
 
@@ -20,15 +21,16 @@ const PanelNode: React.FC<Props> = ({ node }) => {
   });
   const [, updateNode] = useAtom(updateNodeAtom);
   const boxRef = useRef<HTMLDivElement>(null);
+  const [mouse] = useAtom(mouseAtom);
   const [start, setStart] = useState<{ x: number; y: number } | null>(null);
   const [end, setEnd] = useState<{ x: number; y: number } | null>(null);
 
   // node間の矢印をつなぐときに、Dragでの移動を無効化するため
-  const [isDraggable, setIsDraggable] = useState(true);
+  const [isNodeDraggable, setIsNodeDraggable] = useState(true);
   const onMouseDown = (event: React.MouseEvent) => {
     const target = event.target as Element;
     if (target.getAttribute("data-node-arrow-start") !== null) {
-      setIsDraggable(false);
+      setIsNodeDraggable(false);
     }
   };
 
@@ -37,6 +39,18 @@ const PanelNode: React.FC<Props> = ({ node }) => {
     updateNode({ id: node.id, panelX: position.x, panelY: position.y });
   }, [node.id, position.x, position.y, updateNode]);
 
+  // 矢印の終点の座標を設定
+  useEffect(() => {
+    if (!mouse.isMouseDown) {
+      setIsNodeDraggable(true);
+    }
+  }, [mouse.isMouseDown]);
+  useEffect(() => {
+    if (!isNodeDraggable && mouse.isMouseDown) {
+      setEnd(mouse);
+    }
+  }, [mouse, isNodeDraggable]);
+
   return (
     <>
       <motion.div
@@ -44,7 +58,7 @@ const PanelNode: React.FC<Props> = ({ node }) => {
           top: position.y,
           left: position.x,
         }}
-        drag={isDraggable}
+        drag={isNodeDraggable}
         dragMomentum={false}
         onDragEnd={(event, info) => {
           setPosition((prev) => ({
@@ -53,27 +67,14 @@ const PanelNode: React.FC<Props> = ({ node }) => {
           }));
         }}
         onMouseDown={onMouseDown}
-        onMouseMove={(event) => {
+        onMouseMove={() => {
           const rect = boxRef.current?.getBoundingClientRect();
-          if (isDraggable && rect) {
+          if (isNodeDraggable && rect) {
             setStart({
               x: rect.right,
               y: rect.top + rect.height / 2,
             });
           }
-
-          if (!isDraggable) {
-            setEnd({
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }
-        }}
-        onMouseUp={() => {
-          setIsDraggable(true);
-        }}
-        onMouseLeave={() => {
-          setIsDraggable(true);
         }}
       >
         <Box
@@ -114,9 +115,7 @@ const PanelNode: React.FC<Props> = ({ node }) => {
           </Flex>
         </Box>
       </motion.div>
-      {start !== null && end !== null && (
-        <NodeArrow start={start} end={{ x: 500, y: 500 }} />
-      )}
+      {start !== null && end !== null && <NodeArrow start={start} end={end} />}
     </>
   );
 };
