@@ -67,7 +67,7 @@ const PanelNode: React.FC<Props> = ({ node }) => {
           }));
         }}
         onMouseDown={onMouseDown}
-        onMouseMove={() => {
+        onMouseMove={(e) => {
           const rect = boxRef.current?.getBoundingClientRect();
           if (isNodeDraggable && rect) {
             setStart({
