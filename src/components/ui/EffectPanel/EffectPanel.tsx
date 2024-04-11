@@ -32,6 +32,7 @@ const EffectPanel: React.FC<Props> = ({}) => {
               hasOut: true,
               panelX: 0,
               panelY: 0,
+              options: {},
             },
           },
           {
@@ -47,6 +48,7 @@ const EffectPanel: React.FC<Props> = ({}) => {
               hasOut: true,
               panelX: 0,
               panelY: 0,
+              options: {},
             },
           },
         ]}

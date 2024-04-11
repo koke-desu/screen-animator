@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import ArrowAnimation from "./ArrowAnimation";
 import NodeArrow from "../NodeArrow/NodeArrow";
 import { mouseAtom } from "@/globalState/mouse";
+import { hoverElementIdAtom } from "@/globalState/hoverElement";
 
 type Props = { node: NodeType };
 
@@ -24,6 +25,8 @@ const PanelNode: React.FC<Props> = ({ node }) => {
   const [mouse] = useAtom(mouseAtom);
   const [start, setStart] = useState<{ x: number; y: number } | null>(null);
   const [end, setEnd] = useState<{ x: number; y: number } | null>(null);
+  const [hoverElementId] = useAtom(hoverElementIdAtom);
+  const isHover = node.id === hoverElementId;
 
   // node間の矢印をつなぐときに、Dragでの移動を無効化するため
   const [isNodeDraggable, setIsNodeDraggable] = useState(true);
@@ -76,6 +79,7 @@ const PanelNode: React.FC<Props> = ({ node }) => {
             });
           }
         }}
+        data-node-id={node.id}
       >
         <Box
           bg="gray.200"
@@ -90,6 +94,8 @@ const PanelNode: React.FC<Props> = ({ node }) => {
           }}
           userSelect="none"
           ref={boxRef}
+          ring={2}
+          ringColor={isHover ? "gray.500" : "transparent"}
         >
           <Flex
             pl={3}
