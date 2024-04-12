@@ -1,16 +1,26 @@
 "use client";
 import { nodesAtom } from "@/globalState/nodes";
 import { useAtom } from "jotai";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PanelNode from "../PanelNode/PanelNode";
 import PanelAddMenu from "../PanelAddMenu/PanelAddMenu";
+import { setPanelPositionAtom } from "@/globalState/panelPosition";
 type Props = {};
 
 const OutputPanel: React.FC<Props> = ({}) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const [nodes] = useAtom(nodesAtom);
+  const [, setPanelPosition] = useAtom(setPanelPositionAtom);
+  useEffect(() => {
+    setPanelPosition("Output", ref);
+  }, [setPanelPosition]);
 
   return (
-    <div className="relative flex h-full flex-1 flex-col rounded-lg bg-gray-dark">
+    <div
+      className="relative flex h-full flex-1 flex-col rounded-lg bg-gray-dark"
+      ref={ref}
+    >
       {nodes
         .filter((node) => node.panel === "Output")
         .map((node) => (
@@ -32,6 +42,7 @@ const OutputPanel: React.FC<Props> = ({}) => {
               hasOut: true,
               panelX: 0,
               panelY: 0,
+              options: {},
             },
           },
         ]}

@@ -1,17 +1,27 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PanelAddMenu from "../PanelAddMenu/PanelAddMenu";
 import { useAtom } from "jotai";
 import { nodesAtom } from "@/globalState/nodes";
 import PanelNode from "../PanelNode/PanelNode";
+import { setPanelPositionAtom } from "@/globalState/panelPosition";
 
 type Props = {};
 
 const TriggerPanel: React.FC<Props> = ({}) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const [nodes] = useAtom(nodesAtom);
+  const [, setPanelPosition] = useAtom(setPanelPositionAtom);
+  useEffect(() => {
+    setPanelPosition("Trigger", ref);
+  }, [setPanelPosition]);
 
   return (
-    <div className="relative flex h-full flex-1 flex-col rounded-lg bg-gray-dark">
+    <div
+      className="relative flex h-full flex-1 flex-col rounded-lg bg-gray-dark"
+      ref={ref}
+    >
       {nodes
         .filter((node) => node.panel === "Trigger")
         .map((node) => (
@@ -33,6 +43,7 @@ const TriggerPanel: React.FC<Props> = ({}) => {
               hasOut: true,
               panelX: 0,
               panelY: 0,
+              options: {},
             },
           },
           {
@@ -48,6 +59,7 @@ const TriggerPanel: React.FC<Props> = ({}) => {
               hasOut: true,
               panelX: 0,
               panelY: 0,
+              options: {},
             },
           },
         ]}
