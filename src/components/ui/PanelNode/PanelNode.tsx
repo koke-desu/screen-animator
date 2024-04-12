@@ -11,6 +11,7 @@ import ArrowAnimation from "./ArrowAnimation";
 import NodeArrow from "../NodeArrow/NodeArrow";
 import { mouseAtom } from "@/globalState/mouse";
 import { hoverElementIdAtom } from "@/globalState/hoverElement";
+import { addNodeArrowAtom } from "@/globalState/nodeArrows";
 
 type Props = { node: NodeType };
 
@@ -27,6 +28,15 @@ const PanelNode: React.FC<Props> = ({ node }) => {
   const [end, setEnd] = useState<{ x: number; y: number } | null>(null);
   const [hoverElementId] = useAtom(hoverElementIdAtom);
   const isHover = node.id === hoverElementId;
+  const [, addNodeArrow] = useAtom(addNodeArrowAtom);
+
+  useEffect(() => {
+    updateNode({
+      id: node.id,
+      width: boxRef.current?.clientWidth || 0,
+      height: boxRef.current?.clientHeight || 0,
+    });
+  }, [node.id, updateNode]);
 
   // node間の矢印をつなぐときに、Dragでの移動を無効化するため
   const [isNodeDraggable, setIsNodeDraggable] = useState(true);
@@ -64,10 +74,20 @@ const PanelNode: React.FC<Props> = ({ node }) => {
         drag={isNodeDraggable}
         dragMomentum={false}
         onDragEnd={(event, info) => {
-          setPosition((prev) => ({
-            x: prev.x + info.offset.x,
-            y: prev.y + info.offset.y,
-          }));
+          if (isNodeDraggable) {
+            setPosition((prev) => ({
+              x: prev.x + info.offset.x,
+              y: prev.y + info.offset.y,
+            }));
+          }
+
+          if (!isNodeDraggable && hoverElementId) {
+            addNodeArrow({
+              startNodeId: node.id,
+              endNodeId: hoverElementId,
+            });
+          }
+          setEnd(null);
         }}
         onMouseDown={onMouseDown}
         onMouseMove={(e) => {

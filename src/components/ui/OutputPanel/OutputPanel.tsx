@@ -42,6 +42,8 @@ const OutputPanel: React.FC<Props> = ({}) => {
               hasOut: true,
               panelX: 0,
               panelY: 0,
+              width: 0,
+              height: 0,
               options: {},
             },
           },

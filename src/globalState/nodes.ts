@@ -9,6 +9,8 @@ export type NodeType = {
   hasOut: boolean;
   panelX: number;
   panelY: number;
+  width: number;
+  height: number;
   options: {
     [key: string]: any;
   };
