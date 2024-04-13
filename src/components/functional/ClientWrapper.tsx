@@ -4,6 +4,7 @@ import React from "react";
 import { useAtom } from "jotai";
 import { attachHoverElementEffect } from "@/globalState/hoverElement";
 import { attachMouseMoveEffect } from "@/globalState/mouse";
+import { attachFocusNodeEffect, focusNodeAtom } from "@/globalState/focusNode";
 
 const theme = extendTheme({
   colors: {
@@ -28,6 +29,7 @@ type Props = {
 const ClientWrapper: React.FC<Props> = ({ children }) => {
   useAtom(attachHoverElementEffect);
   useAtom(attachMouseMoveEffect);
+  useAtom(attachFocusNodeEffect);
 
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 };
