@@ -1,3 +1,4 @@
+import { OptionComponentName, OptionType } from "@/components/ui/NodeOptions";
 import { atom } from "jotai";
 
 export type NodeType = {
@@ -11,9 +12,7 @@ export type NodeType = {
   panelY: number;
   width: number;
   height: number;
-  options: {
-    [key: string]: any;
-  };
+  options: OptionType<OptionComponentName>[];
 };
 
 export const nodesAtom = atom<NodeType[]>([]);

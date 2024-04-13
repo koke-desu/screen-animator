@@ -45,7 +45,7 @@ const TriggerPanel: React.FC<Props> = ({}) => {
               panelY: 0,
               width: 0,
               height: 0,
-              options: {},
+              options: [],
             },
           },
           {
@@ -63,7 +63,7 @@ const TriggerPanel: React.FC<Props> = ({}) => {
               panelY: 0,
               width: 0,
               height: 0,
-              options: {},
+              options: [],
             },
           },
         ]}

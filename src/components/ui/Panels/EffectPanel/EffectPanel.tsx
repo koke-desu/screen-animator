@@ -43,7 +43,7 @@ const EffectPanel: React.FC<Props> = ({}) => {
               panelY: 0,
               width: 0,
               height: 0,
-              options: {},
+              options: [],
             },
           },
           {
@@ -61,7 +61,7 @@ const EffectPanel: React.FC<Props> = ({}) => {
               panelY: 0,
               width: 0,
               height: 0,
-              options: {},
+              options: [],
             },
           },
         ]}
