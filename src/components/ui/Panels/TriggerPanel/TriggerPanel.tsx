@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import PanelAddMenu from "../PanelAddMenu/PanelAddMenu";
 import { useAtom } from "jotai";
 import { nodesAtom } from "@/globalState/nodes";
-import PanelNode from "../PanelNode/PanelNode";
+import PanelNode from "../../PanelNode/PanelNode";
 import { setPanelPositionAtom } from "@/globalState/panelPosition";
 
 type Props = {};
