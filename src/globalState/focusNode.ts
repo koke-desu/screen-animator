@@ -19,7 +19,9 @@ export const setFocusNodeAtom = atom(null, (get, set, id: string | null) => {
 export const attachFocusNodeEffect = atomEffect((get, set) => {
   const handleClick = (event: MouseEvent) => {
     const hoverElement = get(hoverElementIdAtom);
-    set(setFocusNodeAtom, hoverElement);
+    if (hoverElement) {
+      set(setFocusNodeAtom, hoverElement);
+    }
   };
 
   document.addEventListener("click", handleClick);
