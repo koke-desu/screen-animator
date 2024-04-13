@@ -1,10 +1,9 @@
 "use client";
-
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import React from "react";
-import AddWindowEvent from "./AddWindowEvent";
 import { useAtom } from "jotai";
 import { attachHoverElementEffect } from "@/globalState/hoverElement";
+import { attachMouseMoveEffect } from "@/globalState/mouse";
 
 const theme = extendTheme({
   colors: {
@@ -28,12 +27,8 @@ type Props = {
 
 const ClientWrapper: React.FC<Props> = ({ children }) => {
   useAtom(attachHoverElementEffect);
+  useAtom(attachMouseMoveEffect);
 
-  return (
-    <ChakraProvider theme={theme}>
-      <AddWindowEvent />
-      {children}
-    </ChakraProvider>
-  );
+  return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 };
 export default ClientWrapper;
