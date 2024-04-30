@@ -1,7 +1,7 @@
-import { OptionComponentName, OptionType } from "@/components/ui/NodeOptions";
+import { OptionsType } from "@/components/ui/NodeOptions";
 import { atom } from "jotai";
 
-export type NodeType = {
+export type NodeType<Options extends Readonly<OptionsType> = []> = {
   id: string;
   panel: "Trigger" | "Effect" | "Output";
   label: string;
@@ -12,7 +12,8 @@ export type NodeType = {
   panelY: number;
   width: number;
   height: number;
-  options: OptionType<OptionComponentName>[];
+  options: Options;
+  run: (input: { options: Options }) => any; // TODO: 型をいい感じにしたい。NodeType["hasIn"]の型とかに合わせて動的に変化させたいな。それに加えて、描画用の基盤となるAPIの受け渡しもここで行う。
 };
 
 export const nodesAtom = atom<NodeType[]>([]);
