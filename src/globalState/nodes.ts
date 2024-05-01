@@ -41,6 +41,7 @@ export const selectedNodeAtom = atom(
 export const updateNodeAtom = atom(
   null,
   (get, set, node: Pick<NodeType, "id"> & Partial<NodeType>) => {
+    console.log(node);
     set(nodesAtom, (prev) => {
       const index = prev.findIndex((n) => n.id === node.id);
       prev[index] = { ...prev[index], ...node };

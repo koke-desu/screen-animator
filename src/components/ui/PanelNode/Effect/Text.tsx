@@ -15,12 +15,6 @@ const options = [
     name: "fontSize",
     min: 8,
   }),
-  createOption({
-    type: "Number",
-    label: "fontSize",
-    name: "fontSize",
-    min: 8,
-  }),
 ] as const;
 
 const run: Omit<NodeType, "id">["run"] = ({ options: _options }) => {

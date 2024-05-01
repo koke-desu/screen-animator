@@ -7,7 +7,7 @@ type Props = {
   min?: number;
 } & NodeOptionBaseType<number>;
 
-const NumberInput: React.FC<Props> = ({ label, max, min }) => {
+const NumberInput: React.FC<Props> = ({ label, max, min, value, setValue }) => {
   return (
     <Box>
       <Text color="white">{label}</Text>
@@ -18,6 +18,10 @@ const NumberInput: React.FC<Props> = ({ label, max, min }) => {
         borderColor="gray.500"
         max={max}
         min={min}
+        value={value || 0}
+        onChange={(e) => {
+          setValue(Number(e.target.value));
+        }}
       />
     </Box>
   );
