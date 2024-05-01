@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 import PanelNode from "../../PanelNode/PanelNode";
 import PanelAddMenu from "../PanelAddMenu/PanelAddMenu";
 import { setPanelPositionAtom } from "@/globalState/panelPosition";
+import outputItems from "../../PanelNode/Output";
 type Props = {};
 
 const OutputPanel: React.FC<Props> = ({}) => {
@@ -26,29 +27,7 @@ const OutputPanel: React.FC<Props> = ({}) => {
         .map((node) => (
           <PanelNode key={node.id} node={node} />
         ))}
-      <PanelAddMenu
-        title="出力を追加"
-        items={[
-          {
-            label: "画面への出力",
-            iconUrl:
-              "https://firebasestorage.googleapis.com/v0/b/screen-animator.appspot.com/o/icons%2Fwindow.svg?alt=media&token=39e156a0-b659-4555-a91c-d6df04f5eed9",
-            initialNode: {
-              panel: "Output",
-              label: "ウィンドウ",
-              iconUrl:
-                "https://firebasestorage.googleapis.com/v0/b/screen-animator.appspot.com/o/icons%2Fwindow.svg?alt=media&token=39e156a0-b659-4555-a91c-d6df04f5eed9",
-              hasIn: false,
-              hasOut: true,
-              panelX: 0,
-              panelY: 0,
-              width: 0,
-              height: 0,
-              options: [],
-            },
-          },
-        ]}
-      />
+      <PanelAddMenu title="出力を追加" items={outputItems} />
     </div>
   );
 };
