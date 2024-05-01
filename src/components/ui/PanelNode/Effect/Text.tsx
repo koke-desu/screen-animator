@@ -1,7 +1,7 @@
 "use client";
-
 import { NodeType } from "@/globalState/nodes";
 import { createOption } from "../../NodeOptions";
+import { MenuItemType } from "../../Panels/PanelAddMenu/PanelAddMenu";
 
 const options = [
   createOption({
@@ -15,15 +15,25 @@ const options = [
     name: "fontSize",
     min: 8,
   }),
+  createOption({
+    type: "Number",
+    label: "fontSize",
+    name: "fontSize",
+    min: 8,
+  }),
 ] as const;
 
-type Node = Omit<NodeType<typeof options>, "id">;
+const run: Omit<NodeType, "id">["run"] = ({ options: _options }) => {
+  const val = _options as unknown as typeof options;
+  const option = {
+    displayText: val[0].value,
+    fontSize: val[1].value,
+  };
 
-const run: Node["run"] = ({ options }) => {
-  return <p>{options[0].value}</p>;
+  return <p style={{ fontSize: option.fontSize }}>{option.displayText}</p>;
 };
 
-export const initialNode: Node = {
+const initialNode: Omit<NodeType, "id"> = {
   panel: "Effect",
   label: "テキスト",
   iconUrl:
@@ -37,3 +47,11 @@ export const initialNode: Node = {
   options,
   run,
 };
+
+const Text: MenuItemType = {
+  label: "テキスト",
+  iconUrl: initialNode.iconUrl,
+  initialNode: initialNode as Omit<NodeType, "id">,
+};
+
+export default Text;

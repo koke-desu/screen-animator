@@ -15,6 +15,7 @@ const OptionComponents = {
 export type OptionComponentName = keyof typeof OptionComponents;
 export type OptionComponentProps<T extends OptionComponentName> =
   React.ComponentProps<(typeof OptionComponents)[T]>;
+
 export type OptionType<T extends OptionComponentName> = {
   type: T;
 } & OptionComponentProps<T>;

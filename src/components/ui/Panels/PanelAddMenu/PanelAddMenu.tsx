@@ -14,7 +14,7 @@ import {
 import { useAtom } from "jotai";
 import React from "react";
 
-type MenuItemType = {
+export type MenuItemType = {
   label: string;
   iconUrl: string;
   initialNode: Omit<NodeType, "id">;

@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 import PanelNode from "../../PanelNode/PanelNode";
 import PanelAddMenu from "../PanelAddMenu/PanelAddMenu";
 import { setPanelPositionAtom } from "@/globalState/panelPosition";
+import effectItems from "../../PanelNode/Effect";
 type Props = {};
 
 const EffectPanel: React.FC<Props> = ({}) => {
@@ -25,47 +26,7 @@ const EffectPanel: React.FC<Props> = ({}) => {
         .map((node) => (
           <PanelNode key={node.id} node={node} />
         ))}
-      <PanelAddMenu
-        title="エフェクトを追加"
-        items={[
-          {
-            label: "ウィンドウの読み込み",
-            iconUrl:
-              "https://firebasestorage.googleapis.com/v0/b/screen-animator.appspot.com/o/icons%2Fwindow.svg?alt=media&token=39e156a0-b659-4555-a91c-d6df04f5eed9",
-            initialNode: {
-              panel: "Effect",
-              label: "ウィンドウ",
-              iconUrl:
-                "https://firebasestorage.googleapis.com/v0/b/screen-animator.appspot.com/o/icons%2Fwindow.svg?alt=media&token=39e156a0-b659-4555-a91c-d6df04f5eed9",
-              hasIn: false,
-              hasOut: true,
-              panelX: 0,
-              panelY: 0,
-              width: 0,
-              height: 0,
-              options: [],
-            },
-          },
-          {
-            label: "テキスト",
-            iconUrl:
-              "https://firebasestorage.googleapis.com/v0/b/screen-animator.appspot.com/o/icons%2Ftext.svg?alt=media&token=ed6aa07c-4f59-4d8b-8378-d9355f7fc94a",
-            initialNode: {
-              panel: "Effect",
-              label: "テキスト",
-              iconUrl:
-                "https://firebasestorage.googleapis.com/v0/b/screen-animator.appspot.com/o/icons%2Ftext.svg?alt=media&token=ed6aa07c-4f59-4d8b-8378-d9355f7fc94a",
-              hasIn: false,
-              hasOut: true,
-              panelX: 0,
-              panelY: 0,
-              width: 0,
-              height: 0,
-              options: [],
-            },
-          },
-        ]}
-      />
+      <PanelAddMenu title="エフェクトを追加" items={effectItems} />
     </div>
   );
 };
