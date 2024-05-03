@@ -2,18 +2,21 @@
 import { focusNodeAtom } from "@/globalState/focusNode";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useAtom } from "jotai";
-import React from "react";
+import React, { useState } from "react";
 import TextInput from "../NodeOptions/TextInput";
 import NumberInput from "../NodeOptions/NumberInput";
 import { OptionType } from "../NodeOptions";
 import { updateNodeAtom } from "@/globalState/nodes";
-import { useRun } from "./useRun";
 type Props = {};
 
 const Inspector: React.FC<Props> = ({}) => {
   const [focusNode] = useAtom(focusNodeAtom);
   const [, updateNode] = useAtom(updateNodeAtom);
-  const run = useRun();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const onClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   if (!focusNode)
     return (
@@ -27,7 +30,7 @@ const Inspector: React.FC<Props> = ({}) => {
           position="absolute"
           textAlign="center"
           fontWeight="bold"
-          onClick={run}
+          onClick={onClick}
         >
           実行
         </Button>
@@ -117,7 +120,7 @@ const Inspector: React.FC<Props> = ({}) => {
         position="absolute"
         textAlign="center"
         fontWeight="bold"
-        onClick={run}
+        onClick={onClick}
       >
         実行
       </Button>

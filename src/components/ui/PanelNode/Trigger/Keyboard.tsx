@@ -2,6 +2,7 @@
 import { NodeType } from "@/globalState/nodes";
 import { createOption } from "../../NodeOptions";
 import { MenuItemType } from "../../Panels/PanelAddMenu/PanelAddMenu";
+import { useEffect, useState } from "react";
 
 const options = [
   createOption({
@@ -11,26 +12,32 @@ const options = [
   }),
 ] as const;
 
-const run: Omit<NodeType, "id">["run"] = ({ options: _options }) => {
+const Run: Omit<NodeType, "id">["Run"] = ({ options: _options, input }) => {
   const val = _options as unknown as typeof options;
   const option = {
     key: val[0].value,
   };
-
-  const onSnapshot = (onKeydown: () => void) => {
-    const handler = (e: KeyboardEvent) => {
+  const [isRunning, setIsRunning] = useState(false);
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === option.key) {
-        onKeydown();
+        setIsRunning(true);
       }
     };
-    document.addEventListener("keydown", handler);
-
-    return () => {
-      document.removeEventListener("keydown", handler);
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.key === option.key) {
+        setIsRunning(false);
+      }
     };
-  };
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, [option.key]);
 
-  return onSnapshot;
+  return <>{isRunning && input}</>;
 };
 
 const initialNode: Omit<NodeType, "id"> = {
@@ -45,7 +52,7 @@ const initialNode: Omit<NodeType, "id"> = {
   width: 0,
   height: 0,
   options,
-  run,
+  Run,
 };
 
 const Keyboard: MenuItemType = {

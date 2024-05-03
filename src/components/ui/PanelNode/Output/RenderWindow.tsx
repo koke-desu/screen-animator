@@ -4,11 +4,11 @@ import { MenuItemType } from "../../Panels/PanelAddMenu/PanelAddMenu";
 
 const options = [] as const;
 
-const run: Omit<NodeType, "id">["run"] = ({ options: _options, input }) => {
+const Run: Omit<NodeType, "id">["Run"] = ({ options: _options, input }) => {
   const val = _options as unknown as typeof options;
   const option = {};
 
-  return;
+  return <>{input}</>;
 };
 
 const initialNode: Omit<NodeType, "id"> = {
@@ -23,7 +23,7 @@ const initialNode: Omit<NodeType, "id"> = {
   width: 0,
   height: 0,
   options,
-  run,
+  Run,
 };
 
 const RenderWindow: MenuItemType = {

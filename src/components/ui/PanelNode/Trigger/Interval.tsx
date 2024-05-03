@@ -2,6 +2,7 @@
 import { NodeType } from "@/globalState/nodes";
 import { createOption } from "../../NodeOptions";
 import { MenuItemType } from "../../Panels/PanelAddMenu/PanelAddMenu";
+import { useEffect, useState } from "react";
 
 const options = [
   createOption({
@@ -12,21 +13,20 @@ const options = [
   }),
 ] as const;
 
-const run: Omit<NodeType, "id">["run"] = ({ options: _options }) => {
+const Run: Omit<NodeType, "id">["Run"] = ({ options: _options, input }) => {
   const val = _options as unknown as typeof options;
   const option = { interval: val[0].value };
-
-  const onSnapshot = (onInterval: () => void) => {
-    const handler = setInterval(() => {
-      onInterval();
+  const [isRunning, setIsRunning] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsRunning(true);
     }, option.interval * 1000);
-
     return () => {
-      clearInterval(handler);
+      clearInterval(interval);
     };
-  };
+  }, [option.interval]);
 
-  return onSnapshot;
+  return <>{isRunning && input}</>;
 };
 
 const initialNode: Omit<NodeType, "id"> = {
@@ -41,7 +41,7 @@ const initialNode: Omit<NodeType, "id"> = {
   width: 0,
   height: 0,
   options,
-  run,
+  Run,
 };
 
 const Interval: MenuItemType = {

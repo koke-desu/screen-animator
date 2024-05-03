@@ -6,22 +6,22 @@ import React, { useEffect, useRef } from "react";
 type Props = {};
 
 const RenderWindowPortal: React.FC<Props> = ({}) => {
-  const windowRef = useRef<HTMLDivElement>(null);
+  const renderRef = useRef<HTMLDivElement>(null);
   const [, setWindow] = useAtom(renderPortalRef);
 
   useEffect(() => {
-    if (windowRef.current) {
-      setWindow(windowRef.current);
+    if (renderRef.current) {
+      setWindow(renderRef.current);
     }
   }, [setWindow]);
 
   return (
     <Box
-      display={windowRef.current?.children.length !== 0 ? "block" : "none"}
-      ref={windowRef}
+      // display={renderRef.current?.children.length !== 0 ? "block" : "none"}
+      ref={renderRef}
       position="fixed"
       bg="white"
-      w="80vw"
+      w="20vw"
       h="80vh"
       left="50%"
       top="50%"
