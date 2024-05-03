@@ -13,7 +13,7 @@ export type NodeType = {
   width: number;
   height: number;
   options: Readonly<OptionsType>;
-  run: (input: { options: OptionsType }) => any; // TODO: 型をいい感じにしたい。NodeType["hasIn"]の型とかに合わせて動的に変化させたいな。それに加えて、描画用の基盤となるAPIの受け渡しもここで行う。
+  run: (input: { options: Readonly<OptionsType>; input?: any }) => any; // TODO: 型をいい感じにしたい。NodeType["hasIn"]の型とかに合わせて動的に変化させたいな。それに加えて、描画用の基盤となるAPIの受け渡しもここで行う。
 };
 
 export const nodesAtom = atom<NodeType[]>([]);
@@ -41,7 +41,6 @@ export const selectedNodeAtom = atom(
 export const updateNodeAtom = atom(
   null,
   (get, set, node: Pick<NodeType, "id"> & Partial<NodeType>) => {
-    console.log(node);
     set(nodesAtom, (prev) => {
       const index = prev.findIndex((n) => n.id === node.id);
       prev[index] = { ...prev[index], ...node };

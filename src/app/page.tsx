@@ -5,6 +5,7 @@ import React from "react";
 import Inspector from "@/components/ui/Inspector/Inspector";
 import NodeArrowPortal from "@/components/ui/NodeArrow/NodeArrowPortal";
 import AllNodeArrow from "@/components/ui/NodeArrow/AllNodeArrow";
+import RenderWindowPortal from "@/components/ui/Render/RenderWindowPortal";
 type Props = {};
 
 const Home: React.FC<Props> = ({}) => {
@@ -19,6 +20,7 @@ const Home: React.FC<Props> = ({}) => {
 
       <AllNodeArrow />
       <NodeArrowPortal />
+      <RenderWindowPortal />
     </div>
   );
 };

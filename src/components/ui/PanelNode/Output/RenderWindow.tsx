@@ -1,11 +1,10 @@
 "use client";
 import { NodeType } from "@/globalState/nodes";
-import { createOption } from "../../NodeOptions";
 import { MenuItemType } from "../../Panels/PanelAddMenu/PanelAddMenu";
 
 const options = [] as const;
 
-const run: Omit<NodeType, "id">["run"] = ({ options: _options }) => {
+const run: Omit<NodeType, "id">["run"] = ({ options: _options, input }) => {
   const val = _options as unknown as typeof options;
   const option = {};
 
